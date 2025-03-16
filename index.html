@@ -5,66 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tagwolf.de</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        @font-face {
-            font-family: 'Cyber';
-            src: url('https://fonts.cdnfonts.com/s/20345/Cyberpunk.ttf');
-        }
         body {
-            font-family: 'Cyber', sans-serif;
-            background: black;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             color: white;
-            overflow-x: hidden;
+            text-align: center;
+            background: black;
         }
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        /* Hero Section mit Video */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform: translate(-50%, -50%);
             z-index: -1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .button {
+            background-color: #ffcc00;
+            padding: 12px 24px;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background-color: #e6b800;
+        }
+
+        /* Header */
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: yellow;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            color: yellow;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
 <body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Tagwolf.de</div>
+        <nav>
+            <a href="#">Start</a>
+            <a href="#">Features</a>
+            <a href="#">Über Uns</a>
+            <a href="#">Kontakt</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section mit Video -->
     <section class="hero">
         <video autoplay muted loop playsinline class="background-video">
             <source src="https://i.imgur.com/zrWbgPd.mp4" type="video/mp4">
             Dein Browser unterstützt dieses Videoformat nicht.
         </video>
-    <header class="w-full p-4 bg-black bg-opacity-50 fixed top-0 flex justify-between items-center">
-        <h2 class="text-3xl text-yellow-400">Tagwolf.de</h2>
-        <nav>
-            <ul class="flex space-x-6">
-                <li><a href="#" class="text-white hover:text-yellow-400">Home</a></li>
-                <li><a href="#" class="text-white hover:text-yellow-400">Über uns</a></li>
-                <li><a href="#" class="text-white hover:text-yellow-400">Kontakt</a></li>
-                <li><a href="minecraft-skin.html" class="text-white hover:text-yellow-400">Minecraft Skin</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <div class="h-screen flex flex-col justify-center items-center text-center">
-        <h1 class="text-6xl text-yellow-400 animate-pulse">Willkommen bei Tagwolf.de</h1>
-        <p class="text-xl mt-4">Die Zukunft ist jetzt.</p>
-        <div class="mt-6 flex space-x-4">
-            <button class="bg-blue-500 px-6 py-3 text-lg rounded-xl hover:bg-blue-700 transition-transform transform hover:scale-110">Entdecken</button>
-            <button class="bg-red-500 px-6 py-3 text-lg rounded-xl hover:bg-red-700 transition-transform transform hover:scale-110">Kontakt</button>
+        <div class="hero-content">
+            <h1 class="text-4xl font-bold">Willkommen bei Tagwolf.de</h1>
+            <p class="text-xl mt-4">Die beste Plattform für Minecraft-Suche und mehr!</p>
+            <a href="minecraft-suche.html" class="button mt-6">Minecraft-Suche starten</a>
         </div>
-    </div>
-    
-    <footer class="w-full p-4 bg-black bg-opacity-50 fixed bottom-0 text-center">
-        <p class="text-white">© 2025 Tagwolf.de - Alle Rechte vorbehalten</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Tagwolf.de - Alle Rechte vorbehalten</p>
     </footer>
-    
-    <script>
-        gsap.from("h1", { duration: 1.5, y: -50, opacity: 0, ease: "bounce" });
-        gsap.from("p", { duration: 1.5, delay: 0.5, y: 50, opacity: 0 });
-        gsap.from("button", { duration: 1, delay: 1, scale: 0, opacity: 0, stagger: 0.2 });
-        gsap.from("header", { duration: 1, y: -100, opacity: 0 });
-        gsap.from("footer", { duration: 1, y: 100, opacity: 0 });
-    </script>
+
 </body>
 </html>
