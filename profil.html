@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Spieler-Suche</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl text-yellow-400">Minecraft Spieler-Suche</h1>
+        <input type="text" id="mcUsername" placeholder="Minecraft Benutzername" class="mt-4 p-2 text-black rounded-md">
+        <button onclick="fetchMinecraftData()" class="bg-green-500 px-4 py-2 mt-2 rounded-xl hover:bg-green-700">Spieler suchen</button>
+        
+        <div id="playerInfo" class="mt-6 hidden">
+            <h2 class="text-2xl text-yellow-400">Spieler-Informationen</h2>
+            <img id="mcSkin" class="mt-4 border-2 border-yellow-400 rounded-lg" width="100" height="100">
+            <p><strong>Spieler-ID:</strong> <span id="mcUUID"></span></p>
+            <p><strong>Erstellt am:</strong> <span id="mcCreated"></span></p>
+            <h3 class="text-xl text-yellow-400 mt-4">Namensänderungen</h3>
+            <ul id="nameChanges" class="text-white"></ul>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-2xl text-yellow-400">Letzte Suchanfragen</h2>
+            <ul id="recentSearches" class="text-white"></ul>
+        </div>
+
+        <div class="mt-6">
+            <h2 class="text-2xl text-yellow-400">Such-Streak</h2>
+            <p id="streakCount" class="text-xl">0</p>
+        </div>
+    </div>
+
+    <script>
+        let streak = localStorage.getItem("streak") ? parseInt(localStorage.getItem("streak")) : 0;
+        document.getElementById("streakCount").textContent = streak;
+        
+        function fetchMinecraftData() {
+            const username = document.getElementById("mcUsername").value;
+            if (!username) return;
+            
+            fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id) {
+                        document.getElementById("mcSkin").src = `https://crafatar.com/avatars/${data.id}?size=100&overlay`;
+                        document.getElementById("mcUUID").textContent = data.id;
+                        document.getElementById("playerInfo").classList.remove("hidden");
+                        
+                        fetch(`https://api.mojang.com/user/profiles/${data.id}/names`)
+                            .then(response => response.json())
+                            .then(names => {
+                                const nameList = document.getElementById("nameChanges");
+                                nameList.innerHTML = "";
+                                names.forEach(nameEntry => {
+                                    const li = document.createElement("li");
+                                    li.textContent = nameEntry.name + (nameEntry.changedToAt ? ` (Geändert am: ${new Date(nameEntry.changedToAt).toLocaleDateString()})` : " (Erster Name)");
+                                    nameList.appendChild(li);
+                                });
+                            });
+                        
+                        updateRecentSearches(username);
+                        updateStreak();
+                    }
+                })
+                .catch(() => alert("Benutzername nicht gefunden!"));
+        }
+
+        function updateRecentSearches(username) {
+            let searches = localStorage.getItem("recentSearches") ? JSON.parse(localStorage.getItem("recentSearches")) : [];
+            searches.unshift(username);
+            if (searches.length > 5) searches.pop();
+            localStorage.setItem("recentSearches", JSON.stringify(searches));
+            
+            const searchList = document.getElementById("recentSearches");
+            searchList.innerHTML = "";
+            searches.forEach(name => {
+                const li = document.createElement("li");
+                li.textContent = name;
+                searchList.appendChild(li);
+            });
+        }
+
+        function updateStreak() {
+            streak++;
+            localStorage.setItem("streak", streak);
+            document.getElementById("streakCount").textContent = streak;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("recentSearches")) {
+                updateRecentSearches("");
+            }
+        });
+    </script>
+</body>
+</html>
