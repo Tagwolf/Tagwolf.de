@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagwolf.de</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Cyber';
+            src: url('https://fonts.cdnfonts.com/s/20345/Cyberpunk.ttf');
+        }
+        body {
+            font-family: 'Cyber', sans-serif;
+            background: black;
+            color: white;
+            overflow-x: hidden;
+        }
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <video class="video-bg" autoplay muted loop>
+        <source src="https://www.videvo.net/videvo_files/converted/2014_06/preview/Abstract_1080p.mp4" type="video/mp4">
+    </video>
+    
+    <header class="w-full p-4 bg-black bg-opacity-50 fixed top-0 flex justify-between items-center">
+        <h2 class="text-3xl text-yellow-400">Tagwolf.de</h2>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="text-white hover:text-yellow-400">Home</a></li>
+                <li><a href="#" class="text-white hover:text-yellow-400">Über uns</a></li>
+                <li><a href="#" class="text-white hover:text-yellow-400">Kontakt</a></li>
+                <li><a href="minecraft-skin.html" class="text-white hover:text-yellow-400">Minecraft Skin</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="h-screen flex flex-col justify-center items-center text-center">
+        <h1 class="text-6xl text-yellow-400 animate-pulse">Willkommen bei Tagwolf.de</h1>
+        <p class="text-xl mt-4">Die Zukunft ist jetzt.</p>
+        <div class="mt-6 flex space-x-4">
+            <button class="bg-blue-500 px-6 py-3 text-lg rounded-xl hover:bg-blue-700 transition-transform transform hover:scale-110">Entdecken</button>
+            <button class="bg-red-500 px-6 py-3 text-lg rounded-xl hover:bg-red-700 transition-transform transform hover:scale-110">Kontakt</button>
+        </div>
+    </div>
+    
+    <footer class="w-full p-4 bg-black bg-opacity-50 fixed bottom-0 text-center">
+        <p class="text-white">© 2025 Tagwolf.de - Alle Rechte vorbehalten</p>
+    </footer>
+    
+    <script>
+        gsap.from("h1", { duration: 1.5, y: -50, opacity: 0, ease: "bounce" });
+        gsap.from("p", { duration: 1.5, delay: 0.5, y: 50, opacity: 0 });
+        gsap.from("button", { duration: 1, delay: 1, scale: 0, opacity: 0, stagger: 0.2 });
+        gsap.from("header", { duration: 1, y: -100, opacity: 0 });
+        gsap.from("footer", { duration: 1, y: 100, opacity: 0 });
+    </script>
+</body>
+</html>
